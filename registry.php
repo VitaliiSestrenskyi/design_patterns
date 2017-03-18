@@ -8,7 +8,11 @@ class Registry
     private $values = array();
 
     private function __construct() {}
+    
+    private function __wakeup() {}
 
+    private function __clone() {}
+   
     public static function getInstance()
     {
         if( ! isset(self::$instance) )
