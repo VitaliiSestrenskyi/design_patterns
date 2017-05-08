@@ -56,3 +56,69 @@ $tile = new PollutionDecorator(
 );
 print $tile->getWealthFactor(); //0
 
+
+
+
+
+
+
+//For Front Controller Pattern
+class firstDecorator{
+    private $test1;
+    function __construct($obj)
+    {
+        $this->test1 = $obj;
+    }
+}
+class secondDecorator{
+    private $test2;
+    function __construct($obj)
+    {
+        $this->test2 = $obj;
+    }
+}
+class thirdDecorator{
+    private $test3;
+    function __construct($obj)
+    {
+        $this->test3 = $obj;
+    }
+}
+
+class CommandTest{}
+
+function setDecoratorChain( $decoratorSet='', $cmd='' )
+{
+    $file = 'tsconfig.json';
+    $config = json_decode(file_get_contents($file), true);
+
+    $objectDecorator = new $cmd();
+    foreach ($config as $keyDecoratorSet=>$item)
+    {
+        if($decoratorSet==$keyDecoratorSet)
+        {
+            foreach ($item as $className)
+            {
+                $objectDecorator = new $className($objectDecorator);
+            }
+        }
+    }
+
+    return $objectDecorator;
+}
+
+//tsconfig.json
+{
+  "createEntry":[
+    "firstDecorator",
+    "secondDecorator",
+    "thirdDecorator"
+  ],
+  "createEntry2":[
+    "secondDecorator",
+    "thirdDecorator"
+  ]
+}
+
+//realization
+//setDecoratorChain('createEntry', 'CommandTest');
